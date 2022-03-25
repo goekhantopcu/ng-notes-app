@@ -1,0 +1,13 @@
+<div>
+  <form onsubmit="return false">
+    <div class="mb-3">
+      <label for="title" class="form-label">Titel</label>
+      <input class="form-control" id="title" [formControl]="titleControl" placeholder="Titel...">
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">Inhalt</label>
+      <input class="form-control" id="content" [formControl]="contentControl" placeholder="Inhalt...">
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="doSubmit()">Hinzufügen</button>
+  </form>
+</div>
