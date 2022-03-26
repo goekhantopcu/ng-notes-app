@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Note} from "./note";
+import {Observable, Observer} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +23,11 @@ export class NoteService {
     let result = {title: title, content: content, date: Date.now()};
     this.notes.push(result);
     return result;
+  }
+
+  doLoadNotes(): Observable<Note[]> {
+    return new Observable<Note[]>((observer: Observer<Note[]>) => {
+      setTimeout(() => observer.next(this.notes), 5000);
+    });
   }
 }

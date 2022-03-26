@@ -1,4 +1,9 @@
-<div class="mt-5">
+<ng-template #loading>
+  <div class="spinner-border mt-5" style="width: 2.5rem; height: 2.5rem;" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</ng-template>
+<div class="mt-5" *ngIf="notesObservable | async as notes; else loading">
   <table class="table text-center">
     <thead>
     <tr>

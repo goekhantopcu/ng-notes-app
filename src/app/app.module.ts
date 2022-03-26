@@ -8,6 +8,7 @@ import {NoteListComponent} from './note/note-list/note-list.component';
 import {NoteCreateComponent} from './note/note-create/note-create.component';
 import {AppRoutingModule} from "./app-routing/app-routing.module";
 import { NavbarComponent } from './navbar/navbar.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

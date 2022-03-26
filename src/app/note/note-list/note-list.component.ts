@@ -4,6 +4,7 @@ import {Note} from "../note";
 import {SearchService} from "../../navbar/search/search.service";
 import {SearchCallback} from "../../navbar/search/search-callback";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-note-list',
@@ -11,13 +12,15 @@ import {Router} from "@angular/router";
   styleUrls: ['./note-list.component.css']
 })
 export class NoteListComponent implements OnInit, OnDestroy {
-  public displayedNotes: Note[] = [];
+  displayedNotes: Note[] = [];
+  notesObservable: Observable<Note[]>;
   private callback = new NoteListComponent.NoteListSearchCallback(this);
 
   constructor(
     private noteService: NoteService,
     private searchService: SearchService,
     private router: Router) {
+    this.notesObservable = noteService.doLoadNotes();
   }
 
   ngOnInit(): void {
