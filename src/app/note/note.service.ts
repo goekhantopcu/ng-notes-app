@@ -27,7 +27,7 @@ export class NoteService {
 
   doLoadNotes(): Observable<Note[]> {
     return new Observable<Note[]>((observer: Observer<Note[]>) => {
-      setTimeout(() => observer.next(this.notes), 5000);
+      setTimeout(() => observer.next(this.notes), 3000);
     });
   }
 }
