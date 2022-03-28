@@ -47,7 +47,10 @@ export class NoteListComponent implements OnInit, OnDestroy {
   isSuccess = () => this.state === LoadingState.Success;
   isLoading = () => this.state === LoadingState.Loading;
   isFailed = () => this.state === LoadingState.Failed;
-  remove = (note: Note) => this.noteService.doRemoveNote(note);
+  isEmpty = () => this.notes.length == 0;
+  remove = (note: Note) => {
+    this.noteService.doRemoveNote(note);
+  };
   detail = async (note: Note) => this.router.navigateByUrl('/detail', {state: {note: note}});
 
   static NoteListSearchCallback = class implements SearchCallback {

@@ -1,12 +1,15 @@
-<div *ngIf="isFailed()" class="d-flex justify-content-center mt-5">
+<div class="d-flex justify-content-center mt-5 px-5" *ngIf="isFailed()">
   <h5 class="text-danger">Konnte keine Notizen laden</h5>
 </div>
-<div *ngIf="isLoading()" class="d-flex justify-content-center mt-5">
+<div class="d-flex justify-content-center mt-5 px-5" *ngIf="isEmpty()">
+  <h5 class="text-danger">Aktuell gibt es keine Notizen</h5>
+</div>
+<div class="d-flex justify-content-center mt-5 px-5" *ngIf="isLoading()">
   <div class="spinner-border text-secondary" style="width: 2.5rem; height: 2.5rem;" role="status">
     <span class="visually-hidden">Laden</span>
   </div>
 </div>
-<div class="mt-5" *ngIf="isSuccess()">
+<div class="mt-5 px-5" *ngIf="isSuccess()">
   <table class="table text-center">
     <thead>
     <tr>
