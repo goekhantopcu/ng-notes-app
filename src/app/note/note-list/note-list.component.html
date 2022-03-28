@@ -1,11 +1,12 @@
-<ng-template #loading>
-  <div class="d-flex justify-content-center mt-5">
-    <div class="spinner-border text-secondary" style="width: 2.5rem; height: 2.5rem;" role="status">
-      <span class="visually-hidden">Laden</span>
-    </div>
+<div *ngIf="isFailed()" class="d-flex justify-content-center mt-5">
+  <h5 class="text-danger">Konnte keine Notizen laden</h5>
+</div>
+<div *ngIf="isLoading()" class="d-flex justify-content-center mt-5">
+  <div class="spinner-border text-secondary" style="width: 2.5rem; height: 2.5rem;" role="status">
+    <span class="visually-hidden">Laden</span>
   </div>
-</ng-template>
-<div class="mt-5" *ngIf="notesObservable | async as notes; else loading">
+</div>
+<div class="mt-5" *ngIf="isSuccess()">
   <table class="table text-center">
     <thead>
     <tr>
@@ -15,11 +16,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let note of displayedNotes; index as i;" (click)="doOpenDetail(note)">
+    <tr *ngFor="let note of notes; index as i;" (click)="detail(note)">
       <td>{{note.title}}</td>
       <td>{{note.date | date}}</td>
       <td>
-        <button class="btn btn-danger" (click)="doRemoveNote(note)">Entfernen</button>
+        <button class="btn btn-danger" (click)="remove(note)">Entfernen</button>
       </td>
     </tr>
     </tbody>

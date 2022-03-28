@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Note} from "./note";
-import {Observable, Observer} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +20,7 @@ export class NoteService {
 
   doCreateNote(title: String, content: String): Note {
     let index = this.notes.findIndex(value => value.title.toLowerCase() === title.toLowerCase());
-    if(index != -1) {
+    if (index != -1) {
       let current = this.notes[index];
       let result = {title: title, content: content, date: current.date};
       this.notes = this.notes.filter(value => value !== current);
@@ -33,9 +32,8 @@ export class NoteService {
     return result;
   }
 
-  doLoadNotes(): Observable<Note[]> {
-    return new Observable<Note[]>((observer: Observer<Note[]>) => {
-      setTimeout(() => observer.next(this.notes), 250);
-    });
+  loadNotes = async () => {
+    await Promise.resolve(new Promise((resolve) => setTimeout(resolve, 250)));
+    return this.notes;
   }
 }

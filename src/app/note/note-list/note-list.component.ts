@@ -4,7 +4,7 @@ import {Note} from "../note";
 import {SearchService} from "../../navbar/search/search.service";
 import {SearchCallback} from "../../navbar/search/search-callback";
 import {Router} from "@angular/router";
-import {Observable} from "rxjs";
+import {LoadingState} from "./loading-state";
 
 @Component({
   selector: 'app-note-list',
@@ -12,15 +12,17 @@ import {Observable} from "rxjs";
   styleUrls: ['./note-list.component.css']
 })
 export class NoteListComponent implements OnInit, OnDestroy {
-  displayedNotes: Note[] = [];
-  notesObservable: Observable<Note[]>;
-  private callback = new NoteListComponent.NoteListSearchCallback(this);
+  notes: Note[];
+  state: LoadingState;
+  callback;
 
   constructor(
     private noteService: NoteService,
     private searchService: SearchService,
     private router: Router) {
-    this.notesObservable = noteService.doLoadNotes();
+    this.notes = [];
+    this.state = LoadingState.Loading;
+    this.callback = new NoteListComponent.NoteListSearchCallback(this);
   }
 
   ngOnInit(): void {
@@ -32,34 +34,40 @@ export class NoteListComponent implements OnInit, OnDestroy {
     this.searchService.doUnregisterSearchCallback(this.callback);
   }
 
-  doRemoveNote(note: Note) {
-    this.noteService.doRemoveNote(note);
-    this.loadNotes();
+  loadNotes = async () => {
+    this.state = LoadingState.Loading;
+    try {
+      this.notes = await this.noteService.loadNotes();
+      this.state = LoadingState.Success;
+    } catch (error) {
+      console.error(error);
+      this.state = LoadingState.Failed;
+    }
   }
-
-  private loadNotes() {
-    this.displayedNotes = this.noteService.notes;
-  }
+  isSuccess = () => this.state === LoadingState.Success;
+  isLoading = () => this.state === LoadingState.Loading;
+  isFailed = () => this.state === LoadingState.Failed;
+  remove = (note: Note) => this.noteService.doRemoveNote(note);
+  detail = async (note: Note) => this.router.navigateByUrl('/detail', {state: {note: note}});
 
   static NoteListSearchCallback = class implements SearchCallback {
     constructor(private parent: NoteListComponent) {
     }
 
     doOnSearch(value: string): void {
+      let parent = this.parent;
       if (value.length == 0 || value.replace(" ", "").length == 0) {
-        this.parent.loadNotes();
+        parent.loadNotes();
         return;
       }
-      this.parent.displayedNotes = this.parent.displayedNotes.filter(note => this.doesMatch(value, note));
+      if (parent.notes) {
+        parent.notes = parent.notes.filter(note => this.matches(value, note));
+      }
     }
 
-    private doesMatch(value: string, note: Note): boolean {
+    private matches(value: string, note: Note): boolean {
       return note.title.toLowerCase().includes(value.toLowerCase()) ||
         note.content.toLowerCase().includes(value.toLowerCase());
     }
-  }
-
-  doOpenDetail(note: Note): Promise<boolean> {
-    return this.router.navigateByUrl('/detail', {state: {note: note}})
   }
 }
