@@ -1,13 +1,28 @@
-<div class="mt-5">
+<div class="mt-5 px-5">
   <form>
-    <div class="mb-3">
-      <label for="title" class="form-label">Titel</label>
-      <input class="form-control" id="title" [formControl]="titleControl" placeholder="Titel...">
+    <div class="form-group">
+      <label for="title">Titel</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        [formControl]="titleControl"
+        placeholder="Titel"
+        maxlength="32"
+        value="{{note ? note!.title : ''}}"
+      >
     </div>
-    <div class="mb-3">
-      <label for="content" class="form-label">Inhalt</label>
-      <input class="form-control" id="content" [formControl]="contentControl" placeholder="Inhalt...">
+    <div class="form-group mt-3">
+      <label for="content">Inhalt</label>
+      <textarea
+        class="form-control"
+        id="content"
+        rows="3"
+        [formControl]="contentControl"
+        placeholder="Inhalt"
+        value="{{note ? note!.content : ''}}"
+      ></textarea>
     </div>
-    <button type="submit" class="btn btn-primary" (click)="doSubmit()">Hinzufügen</button>
+    <button type="submit" class="btn btn-primary mt-3" (click)="doSubmit()">{{ note ? 'Speichern' : 'Hinzufügen'}}</button>
   </form>
 </div>

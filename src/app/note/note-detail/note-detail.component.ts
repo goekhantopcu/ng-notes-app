@@ -31,4 +31,12 @@ export class NoteDetailComponent implements OnInit {
     this.noteService.doRemoveNote(this.note!);
     this.router.navigateByUrl('/notes');
   }
+
+  doCancel(): Promise<boolean> {
+    return this.router.navigateByUrl('/');
+  }
+
+  doEdit(): Promise<boolean> {
+    return this.router.navigateByUrl('/create', {state: {note: this.note}})
+  }
 }

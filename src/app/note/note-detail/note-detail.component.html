@@ -3,7 +3,11 @@
     <h5 class="card-title">{{note!.title}}</h5>
     <h6 class="card-subtitle mb-2 text-muted">{{note!.date | date}}</h6>
     <p class="card-text">{{note!.content}}</p>
-    <td><button class="btn btn-danger" (click)="doRemoveNote()">Entfernen</button></td>
+    <div class="btn-toolbar" role="toolbar" aria-label="Buttons for modifying this note">
+      <button class="btn btn-danger" (click)="doCancel()">Abbrechen</button>
+      <button class="btn btn-danger" (click)="doRemoveNote()">Entfernen</button>
+      <button class="btn btn-primary" (click)="doEdit()">Bearbeiten</button>
+    </div>
   </div>
 </div>
 <h1 *ngIf="!hasData()" class="h1 text-center mt-5 text-danger">Konnte die Notiz nicht laden!</h1>

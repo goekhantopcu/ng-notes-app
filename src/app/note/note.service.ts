@@ -20,6 +20,13 @@ export class NoteService {
   }
 
   doCreateNote(title: String, content: String): Note {
+    let index = this.notes.findIndex(value => value.title.toLowerCase() === title.toLowerCase());
+    if(index != -1) {
+      let current = this.notes[index];
+      let result = {title: title, content: content, date: current.date};
+      this.notes[index] = result;
+      return result;
+    }
     let result = {title: title, content: content, date: Date.now()};
     this.notes.push(result);
     return result;
@@ -27,7 +34,7 @@ export class NoteService {
 
   doLoadNotes(): Observable<Note[]> {
     return new Observable<Note[]>((observer: Observer<Note[]>) => {
-      setTimeout(() => observer.next(this.notes), 3000);
+      setTimeout(() => observer.next(this.notes), 250);
     });
   }
 }
