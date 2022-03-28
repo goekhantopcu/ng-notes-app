@@ -24,7 +24,8 @@ export class NoteService {
     if(index != -1) {
       let current = this.notes[index];
       let result = {title: title, content: content, date: current.date};
-      this.notes[index] = result;
+      this.notes = this.notes.filter(value => value !== current);
+      this.notes.push(result);
       return result;
     }
     let result = {title: title, content: content, date: Date.now()};

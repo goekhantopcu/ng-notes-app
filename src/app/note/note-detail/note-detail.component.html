@@ -4,9 +4,13 @@
     <h6 class="card-subtitle mb-2 text-muted">{{note!.date | date}}</h6>
     <p class="card-text">{{note!.content}}</p>
     <div class="btn-toolbar" role="toolbar" aria-label="Buttons for modifying this note">
-      <button class="btn btn-danger" (click)="doCancel()">Abbrechen</button>
-      <button class="btn btn-danger" (click)="doRemoveNote()">Entfernen</button>
-      <button class="btn btn-primary" (click)="doEdit()">Bearbeiten</button>
+      <div class="text-start">
+        <button class="text-left btn btn-danger" (click)="doCancel()">Abbrechen</button>
+      </div>
+      <div class="text-end">
+        <button class="text-right btn btn-danger" (click)="doRemoveNote()">Entfernen</button>
+        <button class="btn btn-primary" (click)="doEdit()">Bearbeiten</button>
+      </div>
     </div>
   </div>
 </div>
